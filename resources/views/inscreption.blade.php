@@ -32,17 +32,8 @@
                 <input type="password" name="password" id="password" required placeholder="••••••••">
             </div>
 
-            <div class="input-group">
-                <label for="role">Rôle</label>
-                <select name="role" id="role" required>
-                    <option value="" disabled selected>Choisir un rôle</option>
-                    <option value="Admin">Administrateur</option>
-                    <option value="Client">Client</option>
-                </select>
-            </div>
-
             <button name="submit" type="submit" class="btn-success">Créer le compte</button>
-            <p class="footer-text">Vous avez déjà un compte ? <a href="/Login/create">Se connecter</a></p>
+            <p class="footer-text">Vous avez déjà un compte ? <a href="{{route('LoginCreate')}}">Se connecter</a></p>
         </form>
     </div>
 </div>

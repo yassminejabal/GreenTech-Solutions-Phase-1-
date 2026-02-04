@@ -3,22 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+
+// use Illuminate\View\View;
+
 
 class LoginController extends Controller
 {
     // Dans ton Controller
     public function authenticate(LoginRequest $request)
     {
-        $data = $request->validated();
-        if (Auth::attempt($data)) {
-            return redirect()->route('dashboard') ;
+        $request->validated();
+        if ($request->role ==='Client') {
+            return view('dachbordClient');
         }
-        return redirect()->route('/inscreption/create');
+        if ($request->role ==='Admin') {
+            return view('dachbord');
+            # code...
         }
+
+
+        }
+        
+    
+        
     public function loginCreate()
     {
-        return view('auth');
-        }
+        return view('Login');
+    }
 }

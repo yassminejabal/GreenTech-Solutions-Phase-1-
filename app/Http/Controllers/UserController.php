@@ -23,11 +23,10 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $data = $request->validated();
-        // dump($data);
+        // dd($data);
+        $data['role'] = "client";
         User::create($data);
          return redirect()->route('Produits.index');
-        // dump($res);
-    // view('Dachbord');
     }
 
     /**

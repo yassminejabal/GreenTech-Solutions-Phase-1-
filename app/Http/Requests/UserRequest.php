@@ -21,11 +21,11 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dump('requiste');
         return [
             'name'=>['required'],
             'email' => ['required', 'email'],
             'password' => ['required'],
-            'role' => ['required'],
         ];
     }
 }

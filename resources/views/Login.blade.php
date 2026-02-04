@@ -17,12 +17,12 @@
             @csrf
             <div class="input-group">
                 <label>Adresse E-mail</label>
-                <input type="email" name="email" required placeholder="nom@exemple.com">
+                <input value="{{ old('email') }}" type="email" name="email" required placeholder="nom@exemple.com">
             </div>
 
             <div class="input-group">
                 <label>Mot de passe</label>
-                <input type="password" name="password" required placeholder="••••••••">
+                <input value="{{ old('password') }}" type="password" name="password" required placeholder="••••••••">
             </div>
 
             <div class="options-row">
