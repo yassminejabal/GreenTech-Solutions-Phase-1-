@@ -12,7 +12,7 @@
 
     <div class="form-container">
         <header>
-            <a href="/Dachbord" class="btn-back">← Retour</a>
+            <a href="{{route('Produits.index')}}" class="btn-back">← Retour</a>
             <h2>Nouveau Produit</h2>
         </header>
 

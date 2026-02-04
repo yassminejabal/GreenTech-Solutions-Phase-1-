@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord - GreenTech</title>
     <link rel="stylesheet" href="{{asset('css/css.css')}}">
-    <link rel="stylesheet" href="../../../public/css/css.css">
+    {{-- <link rel="stylesheet" href="../../../public/css/css.css"> --}}
 </head>
 
 <body>
@@ -22,9 +22,14 @@
 
 
             <section class="controls">
-                <div class="search-box">
-                    <input type="text" placeholder="Rechercher par nom...">
+                <form class="search-box" action="asset{{route('Produits.search')}}" method="POST">
+                     @csrf
+                        <div class="search-box">
+                    <input name="search" type="text" placeholder="Rechercher par nom...">
+                    {{-- <a href="" class="btn-icon delete ">Submit</a> --}}
+                    <button type="submit" name="submit" class="btn-icon delete" >Submit</button>
                 </div>
+                </form>
                 <nav class="filters">
                     <button class="active">Tout</button>
                     <button>Plantes</button>
@@ -34,12 +39,13 @@
             </section>
 
             <main class="product-grid">
+                
                 @foreach($produits as $produit)
             <div class="product-card">
                     <div class="card-image">
                         <img src="{{$produit->image_url}}"
                             alt="Produit">
-                        <span class="category-tag">{{$produit->categorie->name}}</span>
+                        <span class="category-tag">{{$produit->name}}</span>
                     </div>
                     <div class="card-content">
                         <h3>{{$produit->name}}</h3>

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -40,8 +41,12 @@ class User extends Authenticatable
      * @return array<string, string>
      */
     protected function casts(): array
-    {   
+    {
         return [
+            'name',
+            'email',
+            'password',
+            'role',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

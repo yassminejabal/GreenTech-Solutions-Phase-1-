@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card shadow-sm">
-                <img src="{{ $produit->image_url }}" class="img-fluid rounded" alt="{{ $produit->name }}">
+                <img src="{{$produit->image_url}}" class="img-fluid rounded" alt="image">
             </div>
         </div>
 

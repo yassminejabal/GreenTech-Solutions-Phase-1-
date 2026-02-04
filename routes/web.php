@@ -3,23 +3,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
 use PhpParser\Node\Stmt\Function_;
 use App\Http\Controllers\produitController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\categorieController;
+use App\Http\Controllers\UserController;
 
-    // Route::get('/ajouter',);
-    // Route::get('/create',function(){
-    //     return view("create");
-    //     });
-
-    //     Route::get('/', function () {
-    //             // echo 'huii';
-    //             return view("Dachbord");
-    //         });
-    // Route::get("/produit/create",[produitController::class,"create"]);
-    // Route::get("/Dachbord",[categorieController::class,"create"]);
-    // Route::get("/produit/store",[produitController::class,"store"]);
-    // Route::get("/produit/edit",[produitController::class,"edit"]);
-    // Route::get("/",function(){
-    //     echo 'hello';
-    // });
 
     Route::resource('Produits',produitController::class);
+    Route::post('/Produits/search', [ProduitController::class, 'search'])->name('Produits.search');
+    Route::get('/Login/create',[LoginController::class,'loginCreate']);
+    Route::post('/Login',[LoginController::class,'authenticate'])->middleware('Authenticate')->middleware('Authenticate');
+    Route::post('/inscription',[UserController::class,'store']);
+
+
+    Route::get('/inscription/create',[UserController::class,'create']);
+    Route::get('/inscription/create',[UserController::class,'create']);

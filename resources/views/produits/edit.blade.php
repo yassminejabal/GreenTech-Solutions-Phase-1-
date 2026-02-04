@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    {{-- <link rel="stylesheet" href="{{asset('css/css.css')}}"> --}}
+    <link rel="stylesheet" href="{{asset('css/css.css')}}">
+
 </head>
 <body>
     <form action="{{ route('Produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data">
@@ -19,11 +22,11 @@
     <div class="mb-3">
         <label for="category_id">Category</label>
         <select name="category_id" id="category_id" class="form-control">
-            @foreach($categories as $category)
-                <option value="{{ $category->id }}" {{ $produit->category_id == $category->id ? 'selected' : '' }}>
-                    {{ $category->name }}
+            {{-- @foreach($categories as $category) --}}
+                <option value="" >
+                    {{$produit->name}}
                 </option>
-            @endforeach
+            {{-- @endforeach --}}
         </select>
     </div>
 
