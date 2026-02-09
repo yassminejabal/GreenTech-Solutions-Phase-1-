@@ -15,20 +15,24 @@ use Illuminate\Support\Facades\View;
 class LoginController extends Controller
 {
     // Dans ton Controller
-    public function authenticate(LoginRequest $request)
+    public function create(LoginRequest $request)
     {
-        $request->validated();
-        if ($request->role ==='Client') {
+        $data = $request->validated();
+        $check = Auth::attempt($data);
+        // Auth::user()->role = 'Admin';
+        if ($check) {
+        if (Auth::user()->role==='Client') {
             return view('dachbordClient');
         }
-        if ($request->role ==='Admin') {
+        if (Auth::user()->role==='Admin') {
             return view('dachbord');
-            # code...
         }
-
-
+        }
+        else{
+             return redirect()->route('LoginCreate');
         }
         
+        }
     
         
     public function loginCreate()

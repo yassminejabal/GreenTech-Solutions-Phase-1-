@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\produit;
 use Illuminate\View\View;
 use App\Http\Controllers\Route;
+use App\Models\Favoris;
 
 class produitController extends Controller
 {
@@ -14,7 +15,9 @@ class produitController extends Controller
     {
 
         $produits = Produit::with('categorie')->get();
+        
         return view('produits.Dachbord', compact('produits'));
+
     }
 
     public function create()
@@ -24,26 +27,21 @@ class produitController extends Controller
 
 
     public function store(Request $request)
-    {
-
+    {   
         $produit = new produit();
+        $produit->is_favoris = false;
         $produit->name = $request->name;
         $produit->prix = $request->prix;
         $produit->image_url = $request->image_url;
         $produit->description = $request->description;
         $produit->stock = $request->stock;
-
         $produit->categorie_id = $request->categorie_id;
-        // @dump($produit);
         $produit->save();
         return redirect()->route('Produits.index');
     }
 
     public function show(string $id)
     {
-        $produit = produit::with('categorie')->find($id);
-        $produit->delete();
-        return redirect()->route('Produits.index');
     }
 
 
@@ -73,26 +71,34 @@ class produitController extends Controller
     public function destroy(string $id)
     {
         produit::destroy($id);
-        // dd($product);
         return redirect()->route('Produits.index');
     }
 
 
-    public function search(Request $request)
-    {
-        // dd($request);
-        if ($request->has('search')) {
+public function search(Request $request)
+{
+    // dd($request);
+    if ($request->has('search')) {
 
-            // echo $request->search,$request->category,$request->min_price,$request->max_price,$request->sort;
-            $query = produit::query();
-            // dd($query);
-            // // Recherche par mot-clé 
-            $query->where('name', 'like', '%' . $request->search . '%');
-            if ($request->has('category')) {
-                $query->where('category_id', $request->category);
-                $items = $query->get();
-            }
-            return view('Produitsindex',['produits'=>$items]);
-        }
+        $query = Produit::query();
+        $query->where('name', 'like', '%' . $request->search . '%');
+        $items = $query->get();
+        return view('produits.Dachbord', ['produits' => $items]);
     }
+}
+
+public function filter(Request $request)
+{
+    // dd($request);
+    $query = Produit::query();
+
+    if ($request->has('category')) {
+         $query->where('categorie_id', $request->category);
+    }
+
+    $produits = $query->get();
+
+    return view('produits.Dachbord', compact('produits'));
+}
+
 }

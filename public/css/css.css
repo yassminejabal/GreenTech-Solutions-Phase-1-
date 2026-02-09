@@ -111,7 +111,37 @@
 /* Importation d'une police moderne */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* ========================================
+   VARIABLES & CONFIGURATION GLOBALE
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
 :root {
+    /* Couleurs principales */
     --primary-green: #2ecc71;
     --neon-green: #00ff88;
     --dark-bg: #0a0f1a;
@@ -119,18 +149,52 @@
     --glass-border: rgba(255, 255, 255, 0.1);
     --text-main: #ffffff;
     --text-dim: #b0b0b0;
+    
+    /* Couleurs d'état */
+    --danger-red: #c0392b;
+    --danger-hover: #a93226;
+    --success-green: #27ae60;
+    
+    /* Espacements */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    
+    /* Bordures */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 25px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.4s ease;
 }
 
-body {
+/* ========================================
+   RESET & BASE
+   ======================================== */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body, html {
+    width: 100%;
+    min-height: 100vh;
     background-color: var(--dark-bg);
     font-family: 'Poppins', sans-serif;
     color: var(--text-main);
-    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* Background Animation Placeholder */
+/* ========================================
+   FOND ANIMÉ
+   ======================================== */
 #nature-bg {
     position: fixed;
     top: 0;
@@ -138,21 +202,52 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: radial-gradient(circle at top right, #1a2a20, #0a0f1a);
+    background: radial-gradient(circle at center, #0a1a10 0%, #000510 100%);
+    overflow: hidden;
 }
 
+.star {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: moveUp linear infinite;
+    will-change: transform;
+}
+
+@keyframes moveUp {
+    from { 
+        transform: translateY(105vh); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.4;
+    }
+    90% {
+        opacity: 0.4;
+    }
+    to { 
+        transform: translateY(-10vh); 
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   DASHBOARD - LAYOUT
+   ======================================== */
 .dashboard-wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--spacing-lg);
 }
 
-/* Header & Logo */
+/* Header */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 0;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .logo {
@@ -166,940 +261,454 @@ body {
     text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
 }
 
-.btn-add {
-    background: var(--primary-green);
-    color: #000;
-    padding: 12px 24px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
-}
-
-.btn-add:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px var(--neon-green);
-}
-
-/* Controls (Search & Filters) */
+/* ========================================
+   CONTRÔLES (Recherche & Filtres)
+   ======================================== */
 .controls {
-    margin-bottom: 40px;
+    margin-bottom: var(--spacing-xl);
 }
 
 .search-box input {
     width: 100%;
     background: var(--card-bg);
     border: 1px solid var(--glass-border);
-    padding: 15px 25px;
-    border-radius: 15px;
-    color: white;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
     font-size: 1rem;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-lg);
+    transition: var(--transition-normal);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--neon-green);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
 }
 
 .filters {
     display: flex;
-    gap: 15px;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
 }
 
 .filters button {
     background: var(--card-bg);
     border: 1px solid var(--glass-border);
     color: var(--text-dim);
-    padding: 10px 25px;
+    padding: var(--spacing-sm) var(--spacing-xl);
     border-radius: 50px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: var(--transition-normal);
+    font-weight: 500;
 }
 
-.filters button.active, .filters button:hover {
+.filters button.active,
+.filters button:hover {
     background: var(--primary-green);
-    color: black;
+    color: #000;
     border-color: var(--primary-green);
+    transform: translateY(-2px);
 }
 
-/* Product Grid */
+/* ========================================
+   GRILLE DE PRODUITS
+   ======================================== */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
+    gap: var(--spacing-lg);
 }
 
 .product-card {
     background: var(--card-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     backdrop-filter: blur(10px);
-    transition: 0.4s;
+    transition: var(--transition-slow);
+    position: relative;
 }
 
 .product-card:hover {
-    transform: scale(1.03);
+    transform: translateY(-8px);
     border-color: var(--neon-green);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(0, 255, 136, 0.2);
 }
 
+/* Image de carte */
 .card-image {
     position: relative;
     height: 200px;
+    overflow: hidden;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: var(--transition-slow);
 }
 
+.product-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+/* Tag de catégorie */
 .category-tag {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 0.8rem;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(5px);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
+/* Icône favori */
+.favorite-icon {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    font-size: 24px;
+    color: #ff6b6b;
+    text-decoration: none;
+    transition: var(--transition-fast);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.favorite-icon:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 4px 8px rgba(255, 107, 107, 0.5));
+}
+
+/* Contenu de carte */
 .card-content {
-    padding: 20px;
+    padding: var(--spacing-lg);
 }
 
 .card-content h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 var(--spacing-sm) 0;
     font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .price {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--neon-green);
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-xs);
 }
 
+.stock {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Footer de carte */
 .card-footer {
     display: flex;
-    gap: 10px;
+    gap: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--glass-border);
 }
 
 .btn-icon {
+    flex: 1;
     background: rgba(255, 255, 255, 0.1);
     border: none;
-    padding: 10px;
-    border-radius: 10px;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     text-decoration: none;
     font-size: 1.1rem;
-    transition: 0.3s;
+    transition: var(--transition-normal);
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-main);
 }
 
 .btn-icon:hover {
     background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-icon.delete {
+    background: rgba(231, 76, 60, 0.2);
 }
 
 .btn-icon.delete:hover {
     background: #e74c3c;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
 }
-/* Style du conteneur de fond */
-#nature-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
+
+/* ========================================
+   PAGE FORMULAIRE
+   ======================================== */
+.form-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--spacing-lg);
+}
+
+.form-container {
     width: 100%;
-    height: 100%;
-    z-index: -1; /* Derrière tout le contenu */
-    background: radial-gradient(circle at center, #0a1a10 0%, #000510 100%);
-    overflow: hidden;
+    max-width: 480px;
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* Style de chaque particule */
-.star {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: moveUp linear infinite;
+.form-container header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
 }
 
-/* L'animation qui fait monter les étoiles */
-@keyframes moveUp {
-    from {
-        transform: translateY(100vh); /* Part du bas */
-    }
-    to {
-        transform: translateY(-10vh); /* Monte vers le haut */
-    }
-}
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-
-:root {
-    --primary-green: #2ecc71;
-    --neon-green: #00ff88;
-    --dark-bg: #0a0f1a;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --text-main: #ffffff;
-}
-
-body {
+.form-container h2 {
     margin: 0;
-    padding: 0;
-    background-color: var(--dark-bg);
-    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
     color: var(--text-main);
 }
 
-/* --- Fond Animé --- */
-#nature-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: radial-gradient(circle at center, #0a1a10 0%, #000510 100%);
-}
-
-.star {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.4;
-    animation: moveUp linear infinite;
-}
-
-@keyframes moveUp {
-    from { transform: translateY(105vh); }
-    to { transform: translateY(-10vh); }
-}
-
-/* --- 1. Style pour le DASHBOARD --- */
-.dashboard-wrapper {
-    max-width: 1000px;
-    margin: 15px auto;
-    padding: 10px;
-}
-
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 15px;
-}
-
-.logo { font-size: 1.4rem; font-weight: 800; }
-.logo span { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.product-card {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
-    overflow: hidden;
-}
-
-.card-image { height: 140px; }
-.card-image img { width: 100%; height: 100%; object-fit: cover; }
-
-.card-content { padding: 12px; }
-.price { color: var(--neon-green); font-weight: 700; }
-
-/* --- 2. Style pour le CREATE (Formulaire) --- */
-.form-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 90vh;
-}
-
-.form-container {
-    width: 100%;
-    max-width: 400px;
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 15px;
-    padding: 20px;
-}
-
-.input-group { margin-bottom: 12px; text-align: left; }
-.input-group label { font-size: 0.8rem; color: var(--neon-green); margin-bottom: 4px; display: block; }
-
-.styled-form input, .styled-form select, .styled-form textarea {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    padding: 8px 12px;
-    color: white;
-    border-radius: 8px;
-    font-size: 0.85rem;
-}
-
-/* --- Boutons Communs --- */
-.btn-add, .btn-primary {
-    background: var(--primary-green);
-    color: #000;
-    padding: 8px 16px;
-    border-radius: 8px;
+.btn-back {
+    color: var(--text-dim);
     text-decoration: none;
-    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition-normal);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.btn-back:hover {
+    color: var(--neon-green);
+    transform: translateX(-3px);
+}
+
+/* ========================================
+   FORMULAIRES
+   ======================================== */
+.styled-form .input-group,
+.mb-3 {
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.styled-form label,
+label {
     font-size: 0.85rem;
-    border: none;
-    cursor: pointer;
-    transition: 0.3s;
+    color: var(--neon-green);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-.btn-primary:hover, .btn-add:hover {
-    background: var(--neon-green);
-    box-shadow: 0 0 15px var(--neon-green);
-}
-/* --- CONFIGURATION DE BASE --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-
-:root {
-    --primary-green: #2ecc71;
-    --neon-green: #00ff88;
-    --dark-bg: #0a0f1a;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-}
-
-* { box-sizing: border-box; }
-
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100vh; /* Obligatoire pour le centrage vertical */
-    background-color: var(--dark-bg);
-    font-family: 'Poppins', sans-serif;
-    color: white;
-}
-
-/* --- FOND ANIMÉ --- */
-#nature-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    background: radial-gradient(circle at center, #0a1a10 0%, #000510 100%);
-}
-
-.star {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.4;
-    animation: moveUp linear infinite;
-}
-
-@keyframes moveUp {
-    from { transform: translateY(105vh); }
-    to { transform: translateY(-10vh); }
-}
-
-/* --- LE DASHBOARD (Compact) --- */
-.dashboard-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.logo { font-size: 1.5rem; font-weight: 800; }
-.logo span { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
-}
-
-.product-card {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.product-card:hover { border-color: var(--neon-green); transform: translateY(-5px); }
-
-.card-image { height: 140px; }
-.card-image img { width: 100%; height: 100%; object-fit: cover; }
-.card-content { padding: 12px; }
-
-/* --- LE FORMULAIRE (Centrage Absolu) --- */
-.form-page {
-    display: flex;             /* Utilise Flexbox */
-    justify-content: center;    /* Centre horizontalement */
-    align-items: center;        /* Centre verticalement */
-    min-height: 100vh;         /* Prend toute la hauteur de l'écran */
-    width: 100%;
-}
-
-.form-container {
-    width: 95%;
-    max-width: 420px;          /* Taille compacte */
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-.input-group { margin-bottom: 15px; }
-.input-group label { color: var(--neon-green); font-size: 0.85rem; display: block; margin-bottom: 5px; }
-
-.styled-form input, .styled-form select, .styled-form textarea {
+.styled-form input,
+.styled-form select,
+.styled-form textarea,
+.form-control {
     width: 100%;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
-    padding: 10px 15px;
-    color: white;
-    border-radius: 10px;
-    outline: none;
-}
-
-.styled-form input:focus { border-color: var(--neon-green); }
-
-/* --- BOUTONS --- */
-.btn-primary, .btn-add {
-    background: var(--primary-green);
-    border: none;
-    padding: 12px;
-    color: #000;
-    font-weight: 700;
-    width: 100%;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-primary:hover { background: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
-
-
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
-
-:root {
-    --primary-green: #2ecc71;
-    --neon-green: #00ff88;
-    --dark-bg: #0a0f1a;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-}
-
-* { box-sizing: border-box; }
-
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100vh;
-    background-color: var(--dark-bg);
+    border-radius: var(--radius-md);
+    padding: 12px var(--spacing-md);
+    color: var(--text-main);
     font-family: 'Poppins', sans-serif;
-    color: white;
+    font-size: 0.95rem;
+    transition: var(--transition-normal);
 }
 
-/* --- Fond Animé --- */
-#nature-bg {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    background: radial-gradient(circle at center, #0a1a10 0%, #000510 100%);
+textarea.form-control,
+.styled-form textarea {
+    resize: vertical;
+    min-height: 100px;
 }
 
-.star {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.4;
-    animation: moveUp linear infinite;
-}
-
-@keyframes moveUp {
-    from { transform: translateY(105vh); }
-    to { transform: translateY(-10vh); }
-}
-
-/* --- Dashboard Style --- */
-.dashboard-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.logo { font-size: 1.5rem; font-weight: 800; }
-.logo span { color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 15px;
-}
-
-.product-card {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.card-image { height: 140px; }
-.card-image img { width: 100%; height: 100%; object-fit: cover; }
-.card-content { padding: 12px; }
-
-/* --- Form Centrage Style (Create & Edit) --- */
-.form-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.form-container {
-    width: 95%;
-    max-width: 420px;
-    background: var(--card-bg);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-.input-group { margin-bottom: 15px; }
-.input-group label { color: var(--neon-green); font-size: 0.85rem; display: block; margin-bottom: 5px; }
-
-.styled-form input, .styled-form select, .styled-form textarea {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    padding: 10px;
-    color: white;
-    border-radius: 10px;
+.styled-form input:focus,
+.styled-form select:focus,
+.styled-form textarea:focus,
+.form-control:focus {
     outline: none;
+    border-color: var(--neon-green);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* --- Boutons --- */
-.btn-primary, .btn-add {
+.styled-form select option,
+.form-control option {
+    background: var(--dark-bg);
+    color: var(--text-main);
+}
+
+/* ========================================
+   BOUTONS
+   ======================================== */
+.btn-primary,
+.btn-add,
+.btn {
+    width: 100%;
     background: var(--primary-green);
     border: none;
-    padding: 12px;
+    padding: 14px var(--spacing-lg);
+    border-radius: var(--radius-md);
     color: #000;
     font-weight: 700;
-    width: 100%;
-    border-radius: 10px;
+    font-size: 0.95rem;
     cursor: pointer;
+    transition: var(--transition-normal);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     text-decoration: none;
     display: inline-block;
     text-align: center;
 }
 
-
-
-
-
-
-
-
-
-/* form edit */
-/* -------- BASE -------- */
-* {
-    box-sizing: border-box;
+.btn-primary:hover,
+.btn-add:hover,
+.btn:hover {
+    background: var(--neon-green);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    background: #0a0f1a;
-    color: #fff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* -------- FORM -------- */
-form {
-    width: 100%;
-    max-width: 480px;
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,.6);
-}
-
-/* -------- GROUP -------- */
-.mb-3 {
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* -------- LABEL -------- */
-label {
-    margin-bottom: 6px;
-    font-size: 0.85rem;
-    color: #00ff88;
-    font-weight: 600;
-}
-
-/* -------- INPUTS -------- */
-.form-control {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.08);
-    color: white;
-    font-size: 0.95rem;
-    transition: 0.3s ease;
-}
-
-textarea.form-control {
-    resize: vertical;
-    min-height: 90px;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: #00ff88;
-    background: rgba(255,255,255,0.12);
-    box-shadow: 0 0 12px rgba(0,255,136,.5);
-}
-
-/* -------- BUTTON -------- */
-.btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 14px;
-    border: none;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background: #2ecc71;
-    color: #000;
-    transition: 0.3s;
-}
-
-.btn-primary:hover {
-    background: #00ff88;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,255,136,.6);
-}
-
-
-/* autch */
-
-body {
-    background-color: #0d1117; /* خلفية داكنة بحال GitHub/Modern Dashboards */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    color: #e6edf3;
-}
-
-.login-container {
-    width: 100%;
-    max-width: 420px;
-    padding: 20px;
-}
-
-.login-box {
-    background: #161b22; /* لون الكارط غامق شوية على الخلفية */
-    padding: 40px;
-    border-radius: 20px; /* حواف دائرية أكثر بحال الصورة */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* ظل أعمق باش تبان الـ Card طالعة */
-    border: 1px solid #30363d; /* حدود خفيفة كتعطي لمسة احترافية */
-    text-align: center;
-}
-
-h2 {
-    margin: 0 0 10px 0;
-    color: #ffffff;
-    font-size: 26px;
-    font-weight: 600;
-}
-
-.subtitle {
-    color: #8b949e;
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-.input-group {
-    text-align: right; 
-    margin-bottom: 20px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #c9d1d9;
-    font-weight: 500;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 14px;
-    background-color: #0d1117; /* الدخل ديال input يكون غامق */
-    border: 1px solid #30363d;
-    border-radius: 12px; /* حواف دائرية متناسقة */
-    color: #ffffff;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.input-group input:focus {
-    border-color: #58a6ff; /* لون أزرق ملي كتكليكي */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
-}
-
-.error-message {
-    color: #ff7b72;
-    font-size: 12px;
-    margin-top: 5px;
-    display: block;
-}
-
-.options {
-    text-align: right;
-    margin-bottom: 25px;
-}
-
-.remember-me {
-    font-size: 14px;
-    color: #8b949e;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-}
-
-/* ستايل خاص بالزر باش يجي بحال الصورة */
-.login-btn {
-    width: 100%;
-    padding: 14px;
-    background-color: #34495e; /* نفس اللون الأزرق اللي فالتصويرة الأولى ولكن فخلفية غامقة */
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
-}
-
-.login-btn:hover {
-    background-color: #3d5afe; /* تفتيح بسيط عند التحويم */
+.btn-primary:active,
+.btn-add:active,
+.btn:active {
     transform: translateY(-1px);
 }
 
-.login-btn:active {
+/* Bouton de déconnexion */
+.logout-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--danger-red);
+    color: var(--text-main);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.logout-btn:hover {
+    background-color: var(--danger-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192, 57, 43, 0.4);
+}
+
+.logout-btn:active {
     transform: translateY(0);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-:root {
-    --bg-dark: #0d1117;
-    --card-bg: #161b22;
-    --input-bg: #0d1117;
-    --border-color: #30363d;
-    --text-main: #ffffff;
-    --text-muted: #8b949e;
-    --accent-blue: #34495e;    /* Bleu Navy de l'image */
-    --accent-green: #2ea043;   /* Vert des prix dans l'image */
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .dashboard-wrapper {
+        padding: var(--spacing-md);
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+    }
+    
+    .logo {
+        font-size: 1.4rem;
+    }
+    
+    .form-container {
+        padding: var(--spacing-lg);
+    }
+    
+    .filters {
+        gap: var(--spacing-sm);
+    }
+    
+    .filters button {
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: 0.85rem;
+    }
 }
 
-body {
-    background-color: var(--bg-dark);
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    color: var(--text-main);
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+    }
 }
 
-.auth-box {
-    background: var(--card-bg);
-    width: 400px;
-    padding: 40px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    text-align: left; /* Alignment pour le Français */
-}
-
-h2 {
-    font-size: 24px;
-    margin: 0 0 8px 0;
-}
-
-.subtitle {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 30px;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px 15px;
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    color: white;
-    font-size: 15px;
-    box-sizing: border-box;
-    transition: 0.2s ease;
-}
-
-.input-group input:focus {
-    border-color: var(--accent-green);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(46, 160, 67, 0.15);
-}
-
-.btn-primary, .btn-success {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    color: white;
-    margin-top: 10px;
-}
-
-.btn-primary { background-color: var(--accent-blue); }
-.btn-success { background-color: var(--accent-green); }
-
-.options-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 13px;
-}
-
-.forgot-link, .footer-text a {
-    color: var(--accent-green);
-    text-decoration: none;
-}
-
-.footer-text {
-    margin-top: 20px;
+/* ========================================
+   UTILITAIRES
+   ======================================== */
+.text-center {
     text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
 }
 
-/* Style de la case à cocher */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
-    cursor: pointer;
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.hidden {
+    display: none;
 }
 
-
-
-
-
-
-
-
-
-
-/* inscription */
-/* تنسيق إضافي لحقل الـ Select */
-.input-group select {
-    width: 100%;
-    padding: 12px 15px;
-    background: var(--input-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    color: white;
-    font-size: 15px;
-    appearance: none; /* لإزالة السهم الافتراضي للمتصفح */
-    cursor: pointer;
+/* ========================================
+   ANIMATIONS SUPPLÉMENTAIRES
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.input-group select:focus {
-    border-color: var(--accent-green);
-    outline: none;
+.fade-in {
+    animation: fadeIn 0.6s ease forwards;
 }
 
-/* إضافة سهم مخصص بسيط (اختياري) */
-.input-group {
-    position: relative;
+/* Animation de chargement */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
 }
