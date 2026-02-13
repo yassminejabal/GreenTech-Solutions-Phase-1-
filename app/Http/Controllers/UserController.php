@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\updateuserRequist;
 use App\Http\Requests\UserRequest;
 use App\Models\Inscreption;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -14,7 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return View('users.dachbord',compact('users'));
     }
     public function create()
     {
@@ -23,7 +26,6 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $data = $request->validated();
-        $data['role'] = "client";
         User::create($data);
          return redirect()->route('Produits.index');
     }
@@ -48,24 +50,50 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Inscreption $inscreption)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Inscreption $inscreption)
+    public function update(updateuserRequist $request,int $id)
     {
-        //
+              $request->validated();
+        
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            ];
+            
+            $user = User::findOrFail($id);
+      
+
+        $user->update($data);
+
+        return redirect()->route('role.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inscreption $inscreption)
+    public function destroy($id)
     {
-        //
+        $user = User::destroy($id);
+        return redirect()->route('role.index');
     }
-}
+    public function edit($id){
+        $user = User::findOrFail($id);
+        return view('users.editUser', compact('user'));
+    }
+
+}    
+
+    // public function showUserForm(){
+    //     return view('UsersForm');    
+    // }
+
+    // public function showUsers(){
+    //     $users = User::all();    
+    //     return view('UsersList', compact('users'));
+    // } 
+

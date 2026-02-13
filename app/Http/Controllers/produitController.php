@@ -13,11 +13,8 @@ class produitController extends Controller
 
     public function index()
     {
-
         $produits = Produit::with('categorie')->get();
-        
         return view('produits.Dachbord', compact('produits'));
-
     }
 
     public function create()
@@ -79,7 +76,6 @@ public function search(Request $request)
 {
     // dd($request);
     if ($request->has('search')) {
-
         $query = Produit::query();
         $query->where('name', 'like', '%' . $request->search . '%');
         $items = $query->get();
@@ -89,11 +85,10 @@ public function search(Request $request)
 
 public function filter(Request $request)
 {
-    // dd($request);
     $query = Produit::query();
 
     if ($request->has('category')) {
-         $query->where('categorie_id', $request->category);
+         $query->where('categorie_id'.'='.$request->category);
     }
 
     $produits = $query->get();
